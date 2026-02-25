@@ -9,7 +9,7 @@ st.title("📊 GAAVN Data Science Dashboard")
 uploaded_file = st.file_uploader("Upload Excel File", type=["xlsx", "xls"])
 
 if uploaded_file is not None:
-    # Load all sheets
+ 
     excel_file = pd.ExcelFile(uploaded_file)
     sheet_choice = st.selectbox("Select sheet", excel_file.sheet_names)
     df = pd.read_excel(uploaded_file, sheet_name=sheet_choice)
@@ -18,7 +18,7 @@ if uploaded_file is not None:
     st.dataframe(df.head())
 
     if sheet_choice == "Data":
-        # Derived metrics
+      
         df['Total_Cost'] = (df['Milk_Input_Ltrs']*df['Milk_Purchase_Price_per_Litre']) + \
                            df['Ingredient_Cost_RS'] + df['Labour_Cost_RS'] + df['Utility_Cost_RS']
         df['Total_Sales'] = df['Paneer_Output_Kg'] * df["Selling_Price_per_Kg_RS"]
@@ -26,12 +26,12 @@ if uploaded_file is not None:
         df['Cost_per_kg'] = df['Total_Cost']/df['Paneer_Output_Kg']
         df['Gross_Margin'] = df['Total_Sales'] - df['Total_Cost']
 
-        # Convert Date
+        
         df['Date'] = pd.to_datetime(df['Date'].apply(lambda x: f"{x}-2024"), format='%d-%m-%Y')
 
-        # --- KPI Section ---
+      
         st.markdown("---")
-        st.subheader("📌 Key Performance Indicators (KPIs)")
+        st.subheader(" Key Performance Indicators (KPIs)")
 
         total_revenue = df['Total_Sales'].sum()
         avg_daily_profit = df['Gross_Margin'].mean()
@@ -132,8 +132,8 @@ if uploaded_file is not None:
 
         mean_yield = df['Yield_Percent'].mean()
         std_yield = df['Yield_Percent'].std()
-        lower_bound = mean_yield - std_yield
-        upper_bound = mean_yield + std_yield
+        lower_bound = mean_yield - 1.5*std_yield
+        upper_bound = mean_yield + 1.5*std_yield
 
         def yield_flag(x, lb, ub):
             if x < lb:
