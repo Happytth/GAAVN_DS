@@ -55,7 +55,7 @@ if uploaded_file is not None:
                 f"₹{profit_per_litre:,.2f}",
                 f"{avg_yield_efficiency:.2f}%",
                 f"{avg_capacity_utilization:.2f}%",
-                f"{avg_sop_adherence:.2f}%"
+                f"{avg_sop_adherence:.2f}"
             ]
             # ,
             # "What it shows": [
